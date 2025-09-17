@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title >Chai and code</title>
+</head>
+<body style="background-color: bisque;">
+    <ul class="language">
+        <li style="color: blue;">Javascript</li>
+    </ul>
+</body>
+<script>
+    //method of adding li object
+    //yeh innerhtml technique hai isme pure list ko traverse krega then value add krega
+    function addlanguage(langname){
+        const li=document.createElement('li')
+        li.innerHTML=langname
+        document.querySelector('.language').appendChild(li)
+       
+    }
+    addlanguage("python")
+    //optimized way of adding li elements
+    function addopti(langname){
+      const li= document.createElement('li')
+      li.appendChild(document.createTextNode(langname))
+      document.querySelector('.language').appendChild(li)
+
+    }
+    addopti("react")
+    /*
+    Key Difference from innerHTML
+
+In your earlier version, li.innerHTML = langname sets HTML content directly — which works fine for plain text but can cause issues if langname contains HTML tags or special characters.
+
+Here, document.createTextNode() always treats it as text, so even if langname is something like <b>react</b>, it will show as:
+
+<b>react</b>
+
+
+instead of making it bold.
+    */\
+</script>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colored Buttons</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column; /* stack vertically */
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      gap: 20px;
+    }
+
+    .button {
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+
+    /* Colors based on ID */
+    #red { background-color: #e74c3c; }
+    #green { background-color: #27ae60; }
+    #blue { background-color: #3498db; }
+    #yellow { background-color: #f1c40f; color: black; }
+
+    .button:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <button class="button" id="red">Red Button</button>
+  <button class="button" id="green">Green Button</button>
+  <button class="button" id="blue">Blue Button</button>
+  <button class="button" id="yellow">Yellow Button</button>
+</body>
+<script src="chaiandcode.js"></script>
+</html>

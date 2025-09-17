@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>chai and code</h1>
+    <button id="stop">stop</button>
+    <button id="start">start</button>
+    <script>
+        setTimeout(function(){
+            console.log("hitesh")
+            
+        },2000)
+        //yeh ek specific time tak wait krega tab koi function execute krega
+        /*setTimeout(function, delay, param1, param2, ...)
+function → The function (or code) you want to run.//yaha actual me refrence dena hota hai//agar function pass kia
+to turant hojaega settimeout ka koi mtlv nhi hoga
+
+delay → Time in milliseconds (ms) before the function runs.
+
+param1, param2, ... → Optional parameters passed to the function.
+//yeh bass ek baar kaam krega
+        */
+       const changevalue=function(){
+        document.querySelector('h1').innerHTML="best javascript series"
+       }
+       const valuechange=setTimeout(changevalue,5000)
+       document.querySelector('#stop').addEventListener('click',function(){
+        clearTimeout(valuechange)
+        //yeh agar yeh event hota hai to woh settimeout ko rokk deta hai
+        console.log("stopped");
+        
+       })
+       setInterval(function(){
+        //isme every kuch given time interval ke baad code run hoga
+        console.log("hitesh");
+       },2000)
+    </script>
+</body>
+</html>

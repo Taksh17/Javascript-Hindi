@@ -1,0 +1,142 @@
+What is bind()?
+
+bind() is a method of every function in JS (because functions are objects).
+
+It creates a new function where:
+
+The value of this is permanently set (to whatever you pass in).
+
+You can optionally pre-set some arguments (called partial application).
+
+1. Why do we need bind()?
+
+In JavaScript, this depends on how a function is called, not where it is written.
+Example:
+
+const user = {
+  name: "Rakesh",
+  sayHi() {
+    console.log(`Hi, I am ${this.name}`)
+  }
+}
+
+setTimeout(user.sayHi, 1000) 
+// ❌ "Hi, I am undefined"
+
+
+Here setTimeout calls sayHi without object context.
+
+this becomes undefined (in strict mode) or window (non-strict).
+
+👉 Solution: bind the method to the object.
+
+setTimeout(user.sayHi.bind(user), 1000)
+// ✅ "Hi, I am Rakesh"
+
+2. How bind() works
+function greet() {
+  console.log(this.name)
+}
+
+const obj = { name: "Chai" }
+
+const boundFn = greet.bind(obj)
+boundFn()   // "Chai"
+
+
+greet.bind(obj) → returns a new function (boundFn).
+
+Inside that new function, this will always point to obj.
+
+3. Partial Application (Pre-set arguments)
+
+You can also “lock” some arguments in advance.
+
+function multiply(a, b) {
+  return a * b
+}
+
+const double = multiply.bind(null, 2) // fix a=2
+console.log(double(5))  // 10
+console.log(double(8))  // 16
+
+
+👉 Very useful for creating utility functions like double, triple, etc.
+
+4. bind in Classes
+class Button {
+  constructor(value) {
+    this.value = value
+  }
+
+  click() {
+    console.log(`Button ${this.value} clicked`)
+  }
+}
+
+const saveBtn = new Button("Save")
+
+setTimeout(saveBtn.click, 1000)
+// ❌ "Button undefined clicked" (this lost)
+
+setTimeout(saveBtn.click.bind(saveBtn), 1000)
+// ✅ "Button Save clicked"
+
+
+⚡ Without bind, this.value is lost in callback functions.
+
+5. Real DOM Example
+
+Imagine you attach a button event:
+
+<button id="myBtn">Click Me</button>
+
+class Handler {
+  constructor(name) {
+    this.name = name
+    this.button = document.getElementById("myBtn")
+    this.button.addEventListener("click", this.onClick.bind(this))
+  }
+
+  onClick() {
+    console.log(`Hello, ${this.name}`)
+  }
+}
+
+new Handler("Rakesh")
+
+
+👉 Without bind(this), this.onClick would run with this = button element, not the class instance.
+
+6. bind vs call vs apply
+Method	When it runs	Arguments style	Returns
+call	Immediately	fn.call(thisArg, arg1, arg2)	Result of function
+apply	Immediately	fn.apply(thisArg, [args])	Result of function
+bind	Later (when you call it)	fn.bind(thisArg, arg1, arg2)	A new function
+
+Example:
+
+function sayHello(greet, mark) {
+  console.log(`${greet}, I am ${this.name}${mark}`)
+}
+
+const person = { name: "Rakesh" }
+
+sayHello.call(person, "Hi", "!")    // Hi, I am Rakesh!
+sayHello.apply(person, ["Hello", "?"]) // Hello, I am Rakesh?
+const boundFn = sayHello.bind(person, "Hey")
+boundFn("...")  // Hey, I am Rakesh...
+
+7. ⚡ Key Takeaways
+
+bind() does not execute the function immediately.
+
+It returns a new function with this locked (and optionally some args pre-set).
+
+Common use cases:
+
+Fixing this in callbacks (setTimeout, event listeners).
+
+Partial application (creating specialized functions).
+
+Ensuring class methods always use the correct this.
